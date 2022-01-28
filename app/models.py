@@ -42,11 +42,43 @@ class People(TimeStampedModel, SimpleNameModel):
         (NA, 'N/A'),
     )
 
+    BLACK = 'black'
+    BROWN = 'brown'
+    BLONDE = 'blonde'
+    RED = 'red'
+    WHITE = 'white'
+    BALD = 'bald'
+
+    HAIR_COLOR = (
+        (BLACK, 'Black'),
+        (BROWN, 'Brown'),
+        (BLONDE, 'Blonde'),
+        (RED, 'Red'),
+        (WHITE, 'White'),
+        (BALD, 'Bald'),
+    )
+
+    YELLOW = 'yellow'
+    RED = 'red'
+    GREEN = 'green'
+    PURPLE = 'purple'
+    UNKNOWN = 'unknown'
+
+    EYE_COLOR = (
+        (BLACK, 'Black'),
+        (BROWN, 'Brown'),
+        (YELLOW, 'Yellow'),
+        (RED, 'Red'),
+        (GREEN, 'Green'),
+        (PURPLE, 'Purple'),
+        (UNKNOWN, 'Unknown')
+    )
+
     height = models.CharField(max_length=16, blank=True)
     mass = models.CharField(max_length=16, blank=True)
-    hair_color = models.CharField(max_length=32, blank=True)
+    hair_color = models.CharField(max_length=32, choices=HAIR_COLOR)
     skin_color = models.CharField(max_length=32, blank=True)
-    eye_color = models.CharField(max_length=32, blank=True)
+    eye_color = models.CharField(max_length=32, choices=EYE_COLOR)
     birth_year = models.CharField(max_length=16, blank=True)
     gender = models.CharField(max_length=64, choices=GENDER)
     home_world = models.ForeignKey(Planet, on_delete=models.CASCADE, related_name='inhabitants')
