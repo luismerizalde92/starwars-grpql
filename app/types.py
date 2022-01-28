@@ -11,16 +11,6 @@ class PlanetType(DjangoObjectType):
         filter_fields = {'name': ['iexact', 'icontains', 'contains', 'exact'], }
 
 
-class PeopleType(DjangoObjectType):
-    gender = graphene.Enum('PeopleGenderEnum', People.GENDER)
-
-    class Meta:
-        model = People
-        interfaces = (graphene.relay.Node,)
-        filter_fields = {'name': ['iexact', 'icontains', 'contains', 'exact'], 'gender': ['exact']}
-        convert_choices_to_enum = False
-
-
 class DirectorType(DjangoObjectType):
     class Meta:
         model = Director
@@ -45,3 +35,18 @@ class FilmType(DjangoObjectType):
             'episode_id': ['exact'],
             'release_date': ['exact']
         }
+
+
+class PeopleType(DjangoObjectType):
+    gender = graphene.Enum('PeopleGenderEnum', People.GENDER)
+    films = graphene.List(FilmType)
+
+    class Meta:
+        model = People
+        interfaces = (graphene.relay.Node,)
+        filter_fields = {'name': ['iexact', 'icontains', 'contains', 'exact'], 'gender': ['exact']}
+        convert_choices_to_enum = False
+
+    def resolve_films(root, info, **kwargs):
+        # Querying a list
+        return Film.objects.all()
