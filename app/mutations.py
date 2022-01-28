@@ -6,7 +6,7 @@ from .types import PlanetType
 from .utils import generic_model_mutation_process
 
 
-class AddPlanetMutation(graphene.relay.ClientIDMutation):
+class CreateUpdatePlanetMutation(graphene.relay.ClientIDMutation):
     class Input:
         id = graphene.ID(required=False)
         name = graphene.String(required=True)
@@ -30,4 +30,4 @@ class AddPlanetMutation(graphene.relay.ClientIDMutation):
             data['id'] = from_global_id(raw_id)[1]
 
         planet = generic_model_mutation_process(**data)
-        return AddPlanetMutation(planet=planet)
+        return CreateUpdatePlanetMutation(planet=planet)
