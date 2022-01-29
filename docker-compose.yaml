@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  django_app:
+    build: .
+    volumes:
+      - static:/code/static
+      - .:/code
+    
+  nginx:
+    image: nginx:1.13
+    ports:
+      # puerto maquina fisica: puerto docker
+      - 8000:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - static:/code/static
+    depends_on:
+      - django_app
+
+volumes:
+  .:
+  static:
