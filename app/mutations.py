@@ -1,5 +1,6 @@
 import graphene
 from graphql_relay import from_global_id
+from graphql import GraphQLError
 
 from .models import Planet, People, Film
 from .types import PlanetType, PeopleType, FilmType
@@ -58,6 +59,11 @@ class CreatePeopleMutation(graphene.relay.ClientIDMutation):
         data = {'model': People, 'data': input}
         if raw_id:
             data['id'] = from_global_id(raw_id)[1]
+
+        # arrojar error cuando el personaje ya esta registrado
+        people_exists = People.objects.filter(name=input['name']).exists()
+        if people_exists == True:
+            raise GraphQLError('El personaje ya esta registrado en la base de datos')
 
         # obtener id planeta para conseguir el regustro en la base de datos
         planet_id = input.get('home_world', None)

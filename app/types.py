@@ -3,6 +3,7 @@ from graphene_django.types import DjangoObjectType
 
 from .models import Planet, People, Film, Director, Producer
 
+from graphql_relay import from_global_id
 
 class PlanetType(DjangoObjectType):
     class Meta:
@@ -44,9 +45,14 @@ class PeopleType(DjangoObjectType):
     class Meta:
         model = People
         interfaces = (graphene.relay.Node,)
-        filter_fields = {'name': ['iexact', 'icontains', 'contains', 'exact'], 'gender': ['exact']}
+        filter_fields = {
+            'name': ['iexact', 'icontains', 'contains', 'exact'],
+            'gender': ['exact']
+        }
         convert_choices_to_enum = False
 
     def resolve_films(root, info, **kwargs):
         # Querying a list
-        return Film.objects.all()
+        people = People.objects.get(name=root)
+        print(people.films.all())
+        return people.films.all()
