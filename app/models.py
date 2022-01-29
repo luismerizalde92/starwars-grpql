@@ -106,8 +106,25 @@ class Producer(SimpleNameModel):
 
 
 class Film(TimeStampedModel):
+    EPISODE_4 = '4'
+    EPISODE_5 = '5'
+    EPISODE_6 = '6'
+    EPISODE_1 = '1'
+    EPISODE_2 = '2'
+    EPISODE_3 = '3'
+
+    EPISODES = (
+        (EPISODE_4, 'Episode IV'),
+        (EPISODE_5, 'Episode V'),
+        (EPISODE_6, 'Episode VI'),
+        (EPISODE_1, 'Episode I'),
+        (EPISODE_2, 'Episode II'),
+        (EPISODE_3, 'Episode III'),
+    )
+
     title = models.CharField(max_length=100)
-    episode_id = models.PositiveSmallIntegerField()  # TODO: Agregar choices
+    episode_id = models.CharField(
+        max_length=10, choices=EPISODES)  # TODO: Agregar choices
     opening_crawl = models.TextField(max_length=1000)
     release_date = models.DateField()
     director = models.ForeignKey(

@@ -26,8 +26,19 @@ class ProducerType(DjangoObjectType):
         filter_fields = ['name']
 
 
+class Episode(graphene.Enum):
+    EPISODE_IV = '4'
+    EPISODE_V = '5'
+    EPISODE_VI = '6'
+    EPISODE_I = '1'
+    EPISODE_II = '2'
+    EPISODE_III = '3'
+
+
 class FilmType(DjangoObjectType):
     # TODO: Agregar choices para el episode_id
+    episode_id = Episode()
+
     class Meta:
         model = Film
         interfaces = (graphene.relay.Node,)
