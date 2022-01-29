@@ -38,3 +38,18 @@ The service should be available in the URL: `127.0.0.1:8000/graphql`.
 ```
 python manage.py test
 ```
+
+
+# SW API GraphQL Docker
+
+## Setup
+
+Move into de repo and build images
+```
+docker-compose up --build
+```
+
+Collect static files into app container
+```
+docker-compose run django_app python manage.py collectstatic
+```
