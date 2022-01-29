@@ -9,4 +9,5 @@ class Command(BaseCommand):
         management.call_command('loaddata', 'planets', verbosity=0)
         management.call_command('loaddata', 'people', verbosity=0)
         management.call_command('loaddata', 'films', verbosity=0)
-        self.stdout.write(self.style.SUCCESS('The fixtures were loaded successfully.'))
+        self.stdout.write(
+            self.style.SUCCESS('The fixtures were loaded successfully.'))

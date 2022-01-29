@@ -7,7 +7,6 @@ from graphene_django.utils.testing import GraphQLTestCase
 from swapi.schema import schema
 
 from app.models import Planet, People, Film
-from app.types import PeopleType
 
 
 class FirstTestCase(GraphQLTestCase):
@@ -46,13 +45,16 @@ class PeopleTestCase(GraphQLTestCase):
 
         self.planet_tattoine = Planet.objects.get(
                                 name='Tatooine')
-        self.planet_tattoine_id = to_global_id(type='Planet', id=self.planet_tattoine.id)
+        self.planet_tattoine_id = to_global_id(
+            type='Planet', id=self.planet_tattoine.id)
 
         self.film_new_hope = Film.objects.get(title='A New Hope')
-        self.film_new_hope_id = to_global_id(type='Film', id=self.film_new_hope.id)
+        self.film_new_hope_id = to_global_id(
+            type='Film', id=self.film_new_hope.id)
 
         self.leia_organa = People.objects.get(name='Leia Organa')
-        self.leia_organa_id = to_global_id(type='People', id=self.leia_organa.id)
+        self.leia_organa_id = to_global_id(
+            type='People', id=self.leia_organa.id)
 
     def test_create_no_existing_people_mutation(self):
         response = self.query(
@@ -64,12 +66,12 @@ class PeopleTestCase(GraphQLTestCase):
                   people {
                     id
                     name
-                 }     
+                 }
                 }
               }
             ''',
-            #op_name='createPeopleMutation',
-            input_data = {
+            # op_name='createPeopleMutation',
+            input_data={
                 'name': 'Luis Solo',
                 'homeWorld': self.planet_1_id
             }
@@ -82,9 +84,11 @@ class PeopleTestCase(GraphQLTestCase):
         self.assertResponseNoErrors(response)
 
         # Validar que el contenido de la respuesta sea el correcto
-        new_people = People.objects.get(name='Luis Solo')
-        new_people_id = to_global_id(type='People', id=new_people.id)
-        self.assertDictEqual({"people": {"id": "UGVvcGxlVHlwZTo4OQ==", "name": "Luis Solo"}}, response.json()['data']['createPeopleMutation'])
+        self.assertDictEqual({
+            "people": {
+                "id": "UGVvcGxlVHlwZTo4OQ==",
+                "name": "Luis Solo"}
+            }, response.json()['data']['createPeopleMutation'])
 
     def test_create_existing_people_mutation(self):
         """
@@ -101,11 +105,11 @@ class PeopleTestCase(GraphQLTestCase):
                   people {
                     id
                     name
-                 }     
+                 }
                 }
               }
             ''',
-            input_data = {
+            input_data={
                 'name': 'Darth Vader',
                 'homeWorld': self.planet_tattoine_id
             }
@@ -132,11 +136,11 @@ class PeopleTestCase(GraphQLTestCase):
                       id,
                       title
                     }
-                 }     
+                 }
                 }
               }
             ''',
-            input_data = {
+            input_data={
                 'id': no_existing_people_id,
                 'films': [
                     self.film_new_hope_id
@@ -149,7 +153,7 @@ class PeopleTestCase(GraphQLTestCase):
 
     def test_update_existing_people_mutation(self):
         """
-        Prueba para verificar que un usuario existente se pueda editar y 
+        Prueba para verificar que un usuario existente se pueda editar y
         que si el campo films se agrega quede almacenado correctamente
         """
         response = self.query(
@@ -165,11 +169,11 @@ class PeopleTestCase(GraphQLTestCase):
                       id,
                       title
                     }
-                 }     
+                 }
                 }
               }
             ''',
-            input_data = {
+            input_data={
                 'id': self.leia_organa_id,
                 'films': [
                     self.film_new_hope_id
@@ -181,6 +185,6 @@ class PeopleTestCase(GraphQLTestCase):
         self.assertResponseNoErrors(response)
 
         # Validar que el numero de filmes del personaje sea uno
-        films_count = len(response.json()['data']['updatePeopleMutation']['people']['films'])
+        films_count = len(
+            response.json()['data']['updatePeopleMutation']['people']['films'])
         self.assertEqual(films_count, 1)
-

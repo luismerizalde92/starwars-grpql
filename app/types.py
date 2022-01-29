@@ -3,13 +3,13 @@ from graphene_django.types import DjangoObjectType
 
 from .models import Planet, People, Film, Director, Producer
 
-from graphql_relay import from_global_id
 
 class PlanetType(DjangoObjectType):
     class Meta:
         model = Planet
         interfaces = (graphene.relay.Node,)
-        filter_fields = {'name': ['iexact', 'icontains', 'contains', 'exact'], }
+        filter_fields = {
+            'name': ['iexact', 'icontains', 'contains', 'exact'], }
 
 
 class DirectorType(DjangoObjectType):

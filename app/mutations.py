@@ -3,7 +3,7 @@ from graphql_relay import from_global_id
 from graphql import GraphQLError
 
 from .models import Planet, People, Film
-from .types import PlanetType, PeopleType, FilmType
+from .types import PlanetType, PeopleType
 from .utils import generic_model_mutation_process
 
 from django.db import transaction
@@ -62,8 +62,9 @@ class CreatePeopleMutation(graphene.relay.ClientIDMutation):
 
         # arrojar error cuando el personaje ya esta registrado
         people_exists = People.objects.filter(name=input['name']).exists()
-        if people_exists == True:
-            raise GraphQLError('El personaje ya esta registrado en la base de datos')
+        if people_exists is True:
+            raise GraphQLError(
+                'El personaje ya esta registrado en la base de datos')
 
         # obtener id planeta para conseguir el regustro en la base de datos
         planet_id = input.get('home_world', None)
@@ -77,17 +78,16 @@ class CreatePeopleMutation(graphene.relay.ClientIDMutation):
             film_ids = input.get('films', [])
             del input['films']
 
-        people = generic_model_mutation_process(**data)  
+        people = generic_model_mutation_process(**data)
 
         # si los films existen almacenarlos en el personaje
         if film_ids:
             film_ids = [from_global_id(id)[1] for id in film_ids]
             films = Film.objects.filter(id__in=film_ids)
             for film in films:
-                people.films.add(film)      
-        
-        return CreatePeopleMutation(people=people)
+                people.films.add(film)
 
+        return CreatePeopleMutation(people=people)
 
 
 class UpdatePeopleMutation(graphene.relay.ClientIDMutation):
@@ -129,7 +129,7 @@ class UpdatePeopleMutation(graphene.relay.ClientIDMutation):
             film_ids = input.get('films', [])
             del input['films']
 
-        people = generic_model_mutation_process(**data)  
+        people = generic_model_mutation_process(**data)
 
         # si los films existen almacenarlos en el personaje
         if film_ids:
@@ -142,6 +142,6 @@ class UpdatePeopleMutation(graphene.relay.ClientIDMutation):
 
             # agregar los nuevos filmes al personale
             for film in films:
-                people.films.add(film)      
-        
+                people.films.add(film)
+
         return UpdatePeopleMutation(people=people)

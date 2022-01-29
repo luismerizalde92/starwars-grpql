@@ -1,13 +1,9 @@
 import graphene
-from django.db.models import Q
 from graphene_django.filter import DjangoFilterConnectionField
-from graphene_django.types import DjangoObjectType
-from graphql_relay.node.node import from_global_id
 
-from .models import Planet, People, Film, Director, Producer
 from .mutations import (
     CreateUpdatePlanetMutation,
-    CreatePeopleMutation, 
+    CreatePeopleMutation,
     UpdatePeopleMutation
 )
 from .types import PlanetType, PeopleType, FilmType, DirectorType, ProducerType

@@ -1,6 +1,6 @@
 def generic_model_mutation_process(model, data, id=None, commit=True):
-    """ funcion para crear, recuperar o editar la instancia de un modelo 
-        
+    """ funcion para crear, recuperar o editar la instancia de un modelo
+
         :author: Desconocido
 
         :param model(django.db.models.Model): instancia del modelo
@@ -11,7 +11,7 @@ def generic_model_mutation_process(model, data, id=None, commit=True):
             en la base de datos
 
         :return: instancia del modelo
-        :rtype: django.db.models.Model        
+        :rtype: django.db.models.Model
     """
 
     if id:
