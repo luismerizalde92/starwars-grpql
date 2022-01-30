@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "8eada811-4a5d-43de-9b53-b1af5247b5d9",
+		"name": "LoQueNecesito",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update Character",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdatePeopleMutation(\r\n  $input: UpdatePeopleMutationInput!\r\n  ) {\r\n    updatePeopleMutation(input: $input) {\r\n      people {\r\n        id\r\n        name\r\n        films {\r\n          id,\r\n          title\r\n        }\r\n     }     \r\n    }\r\n  }",
+						"variables": "{\r\n  \"input\":{\r\n      \"id\": \"UGVvcGxlVHlwZTox\",\r\n      \"films\": [\r\n        \"RmlsbVR5cGU6Mw==\"\r\n      ]\r\n   }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Character",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreatePeopleMutation(\r\n  $input: CreatePeopleMutationInput!\r\n  ) {\r\n    createPeopleMutation(input: $input) {\r\n      people {\r\n        id\r\n        name\r\n        films {\r\n          id,\r\n          title\r\n        } \r\n     }     \r\n    }\r\n  }",
+						"variables": "{\r\n   \"input\":{\r\n      \"name\": \"Juan Solo\",\r\n      \"homeWorld\": \"UGxhbmV0VHlwZTox\",\r\n      \"films\": [\r\n        \"RmlsbVR5cGU6MQ==\",\r\n        \"RmlsbVR5cGU6Mg==\"\r\n      ]\r\n   }\r\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get People",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n  allPeople {\r\n    edges {\r\n      node {\r\n        id,\r\n        name\r\n      }\r\n    }\r\n  }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
