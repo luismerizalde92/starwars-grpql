@@ -73,7 +73,8 @@ class PeopleTestCase(GraphQLTestCase):
             # op_name='createPeopleMutation',
             input_data={
                 'name': 'Luis Solo',
-                'homeWorld': self.planet_1_id
+                'homeWorld': self.planet_1_id,
+                'gender': 'MALE'
             }
         )
 

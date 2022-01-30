@@ -49,8 +49,16 @@ class FilmType(DjangoObjectType):
         }
 
 
+class Gender(graphene.Enum):
+    MALE = 'male'
+    FEMALE = 'female'
+    HERMAPHRODITE = 'hermaphrodite'
+    NA = 'n/a'
+
+
 class PeopleType(DjangoObjectType):
-    gender = graphene.Enum('PeopleGenderEnum', People.GENDER)
+    #gender = graphene.Enum('PeopleGenderEnum', People.GENDER)
+    gender = Gender()
     films = graphene.List(FilmType)
 
     class Meta:
